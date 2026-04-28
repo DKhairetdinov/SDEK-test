@@ -1,26 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchNews } from "./services/api";
+import type { ApiRecovery } from "./types/news";
+import { NewCard } from "./components/NewsCard/NewsCard";
 
 
 function App() {
-  useEffect(() => {
-    const loadData = async() => {
-      try {
-        const data = await fetchNews(1, 3);
-        console.log('Данные из API получены:\n', data);
-      } catch(error) {
-        console.error('Ошибка получения данных из API:\n', error);
-      }
-    };
 
-    loadData();
-  
+  const [data, setData] = useState<ApiRecovery | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchNews(1, 3)
+    .then((res) => {
+        setData(res);
+        setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
   }, []);
 
+  if(loading) {
+    return <div>Загрузка новостей...</div>;
+  }
+
+  if(!data || data.news.length === 0) {
+    return <div>Новостей нету</div>
+  }
+
   return (
-    <div style={{padding: '20px', fontFamily: "-apple-system"}}>
-      <h2>Тест API</h2>
-    </div>
+    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '20px'}}>
+      <h1>Новости компании</h1>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px'}}>
+        {data.news.map((item) => (
+          <NewCard
+            key={item.id}
+            item={item}
+            showImage={true}
+          />
+        ))}
+      </div>
+    </main>
   );
 }
 
