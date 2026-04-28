@@ -7,7 +7,7 @@ export interface NewsImageSize {
 
 export interface NewCover {
     type: "gallery" | string;
-    image: NewsImageSize;
+    images: NewsImageSize[];
 }
 
 export interface NewsRubrics {
@@ -27,7 +27,7 @@ export interface NewsItem {
 }
 
 export interface ApiRecovery {
-    totalPges: number;
+    totalPages: number;
     perPage: number;
     news: NewsItem[];
     minDatePublication: string;
