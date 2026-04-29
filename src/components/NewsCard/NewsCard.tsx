@@ -6,7 +6,7 @@ interface NewsCardProps {
   showImage: boolean;
 }
 
-export function NewCard({ item, showImage}: NewsCardProps) {
+export function NewsCard({ item, showImage }: NewsCardProps) {
   
   const formattedDate = new Date(item.publishedAt).toLocaleString('ru-RU', {
     day: 'numeric',
