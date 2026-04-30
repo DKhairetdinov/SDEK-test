@@ -17,6 +17,7 @@ export function NewsFeed({ title, variant, isEmpty = false }: NewsFeedProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 990);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 990);
@@ -26,12 +27,17 @@ export function NewsFeed({ title, variant, isEmpty = false }: NewsFeedProps) {
 
     useEffect(() => {
         setLoading(true);
+        setError(false);
+
         fetchNews(currentPage, 3, isEmpty)
             .then(res => {
                 setData(res);
                 setLoading(false);
             })
-            .catch(() => setLoading(false));
+            .catch(() => {
+                setError(true)
+                setLoading(false);
+            });
     }, [currentPage, isEmpty]);
 
     return (
@@ -48,6 +54,16 @@ export function NewsFeed({ title, variant, isEmpty = false }: NewsFeedProps) {
                         <NewsCardSkeleton />
                         <NewsCardSkeleton />
                     </>
+                ) : error ? (
+                    <div style={{ textAlign: 'center', padding: '40px 0' }}>
+                        <p style={{ color: '#E74C3C', fontWeight: 'bold' }}>Не удалось загрузить новости</p>
+                        <button 
+                            onClick={() => window.location.reload()}
+                            style={{ cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', border: '1px solid #ddd' }}
+                        >
+                            Попробовать снова
+                        </button>
+                    </div>
                 ) : (!data || data.news.length === 0) ? (
                     <div className={styles.emptyContent}>
                         <img src="/empty.png" alt="Пусто" className={styles.emptyImg} />
@@ -74,7 +90,7 @@ export function NewsFeed({ title, variant, isEmpty = false }: NewsFeedProps) {
                 )}
             </div>
 
-            {(data && data.news.length > 0) && (
+            {(data && data.news.length > 0 && !error && !loading) && (
                 <div className={styles.pagination}>
                     <button 
                         className={styles.navBtn}
