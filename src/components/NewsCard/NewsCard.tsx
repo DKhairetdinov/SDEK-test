@@ -1,52 +1,63 @@
 import { IconEye, IconThumbUp } from "@tabler/icons-react";
 import type { NewsItem } from "../../types/news";
+import styles from "./NewsCard.module.css";
 
 interface NewsCardProps {
   item: NewsItem;
   showImage: boolean;
+  isFirst: boolean;
+  variant: 'company' | 'business';
+  isMobile: boolean;
 }
 
-export function NewsCard({ item, showImage }: NewsCardProps) {
-  
+const API_HOST = 'http://1e14c3489fcb.vps.myjino.ru:5000';
+
+export function NewsCard({ item, showImage, isFirst, variant, isMobile }: NewsCardProps) {
+  const plug = item?.cover?.images[0]?.m;
+  const imageUrl = plug ? `${API_HOST}${plug}` : undefined;
+
   const formattedDate = new Date(item.publishedAt).toLocaleString('ru-RU', {
-    day: 'numeric',
-    month: 'long',
-    hour: "2-digit",
-    minute: '2-digit'
+    day: 'numeric', month: 'long', hour: "2-digit", minute: '2-digit'
   });
 
+const isLarge = isFirst && (variant === 'business' || isMobile);
+const isCompact = !isFirst && (variant === 'business' || isMobile);
+
+const cardClasses = [
+    styles.card,
+    isLarge ? styles.largeCard : '',
+    isCompact ? styles.compact : ''
+].filter(Boolean).join(' ');
+
   return (
-    <article>
-      
-      {showImage && item.cover && (
-        <div>
-          <img
-            src={item.cover.images[0].m}
-            alt={item.title}
-            />
+    <article className={cardClasses}>
+    
+      {showImage && imageUrl && (
+        <div className={styles.imageWrapper}>
+          <img className={styles.image} src={imageUrl} alt={item.title} />
         </div>
       )}
 
-      <div>
+      <div className={styles.content}>
         <div>
-          <span>{formattedDate}</span>
-          <h3>{item.title}</h3>
+          <span className={styles.date}>{formattedDate}</span>
+          <h3 className={styles.title}>{item.title}</h3>
         </div>
 
-        <div>
-          <div>
+        <div className={styles.footer}>
+          <div className={styles.tags}>
             {item.rubrics?.map(rubric => (
-              <span key={rubric.id}>
+              <span key={rubric.id} className={styles.tag}>
                 {rubric.name}
               </span>
             ))}
           </div>
           
-          <div>
-            <span>
+          <div className={styles.stats}>
+            <span className={styles.statItem}>
               <IconThumbUp size={16}/> {item.likeCount}
             </span>
-            <span>
+            <span className={styles.statItem}>
               <IconEye size={16}/> {item.viewCount}
             </span>
           </div>
@@ -55,5 +66,4 @@ export function NewsCard({ item, showImage }: NewsCardProps) {
 
     </article>
   )
-
 }

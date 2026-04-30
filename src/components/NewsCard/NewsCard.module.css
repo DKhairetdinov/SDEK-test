@@ -1,0 +1,153 @@
+.card {
+    display: flex;
+    flex-direction: row; 
+    gap: 24px;
+    padding: 8px 0;
+}
+
+.imageWrapper {
+  flex-shrink: 0;
+  width: 240px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.largeCard {
+    flex-direction: column;
+    gap: 16px;
+}
+
+.largeCard .imageWrapper {
+    width: 100%;
+    height: 320px;
+}
+
+.largeCard .content {
+    width: 100%;
+}
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.date {
+  font-size: 13px;
+  color: #828282;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 6px 0;
+  color: #5f6269;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+}
+
+.tag {
+  background: #E8EBEF;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #2F3135;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  color: #828282;
+  font-size: 14px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.firstBusinessCard {
+  flex-direction: column;
+}
+.firstBusinessCard .imageWrapper {
+  width: 100%;
+  height: 300px;
+}
+
+.compactCard {
+  padding: 12px 0;
+}
+
+@keyframes pulse {
+  0% { background-color: #f0f0f0; }
+  50% { background-color: #e0e0e0; }
+  100% { background-color: #f0f0f0; }
+}
+
+.skeleton {
+  animation: pulse 1.5s infinite ease-in-out;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.skeletonImage {
+  width: 240px;
+  height: 150px;
+  border-radius: 12px;
+}
+
+.skeletonText {
+  height: 20px;
+  width: 80%;
+  margin: 10px 0;
+}
+
+.skeletonSmall {
+  height: 12px;
+  width: 40%;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .imageWrapper {
+    width: 100%;
+    height: 200px;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .businessFirst .imageWrapper {
+    height: 220px;
+  }
+}
