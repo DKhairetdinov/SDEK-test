@@ -66,8 +66,8 @@
 }
 
 .emptyImg {
-    width: 120px;
-    margin-bottom: 16px;
+  width: 40%;
+  object-fit: cover;
 }
 
 .emptyText {

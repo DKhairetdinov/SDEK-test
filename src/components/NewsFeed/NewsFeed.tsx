@@ -50,7 +50,7 @@ export function NewsFeed({ title, variant, isEmpty = false }: NewsFeedProps) {
                     </>
                 ) : (!data || data.news.length === 0) ? (
                     <div className={styles.emptyContent}>
-                        <img src="http://1e14c3489fcb.vps.myjino.ru:5000/static/empty-cart.png" alt="Пусто" className={styles.emptyImg} />
+                        <img src="/empty.png" alt="Пусто" className={styles.emptyImg} />
                         <p className={styles.emptyText}>Новых новостей нет</p>
                     </div>
                 ) : (

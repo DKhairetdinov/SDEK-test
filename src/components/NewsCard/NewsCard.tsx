@@ -34,7 +34,7 @@ const cardClasses = [
     
       {showImage && imageUrl && (
         <div className={styles.imageWrapper}>
-          <img className={styles.image} src={imageUrl} alt={item.title} />
+          <img className={styles.image} src={imageUrl} alt={item.title}/>
         </div>
       )}
 
